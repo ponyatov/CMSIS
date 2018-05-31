@@ -40,10 +40,10 @@ SRC += $(S) $(C) $(H) $(LDS)
 all: f0disco_demo.elf
 
 deb: f0disco_demo.elf
-	# run st-util& as debug server
+	st-util&
 	ddd ddd --debugger "$(GDB) -x lib/$(MCU_LDSCRIPT).gdb $<"
 
-f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) Makefile
+f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
 	$(CC) $(CFLAGS) $(MCU_CFLAGS) \
 		$(LDFLAGS) -Wl,-Map=$@.map -o $@ \
 		lib/startup_stm32f051x8.o lib/system_stm32f0xx.o \
