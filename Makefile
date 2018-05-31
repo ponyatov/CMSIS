@@ -103,3 +103,6 @@ lib/%.o: src/STM32/%.c Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
 lib/%.o: src/STM32/%.s Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
+
+doxy:
+	doxygen doxy.gen >/dev/null
