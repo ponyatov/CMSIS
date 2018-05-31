@@ -9,3 +9,4 @@ displ /x $r2
 displ /x $r3
 displ
 b main
+monitor reset

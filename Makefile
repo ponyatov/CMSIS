@@ -57,11 +57,11 @@ deb: f0disco_demo.elf
 	ddd ddd --debugger "$(GDB) -x lib/$(MCU_LDSCRIPT).gdb $<"
 
 f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
-	$(CC) $(CFLAGS) $(MCU_CFLAGS) \
-		$(LDFLAGS) -Wl,-Map=$@.map -o $@ \
-		lib/startup_stm32f051x8.o -lSTM32F0 \
-		$<
+	$(CC) $(CFLAGS) $(MCU_CFLAGS) -o $@ \
+		$(LDFLAGS) -Wl,-Map=$@.map \
+			$< -lSTM32F0
 	$(OBJDUMP) -x $@ > $@.objdump
+#		lib/startup_stm32f051x8.o -lSTM32F0 \
 
 lib: $(LIB)
 lib/libSTM32F0.a:
