@@ -34,6 +34,8 @@ LDS	+= lib/STM32L073VZTx_FLASH.ld lib/STM32F051R8_FLASH.ld
 
 SRC += $(S) $(C) $(H) $(LDS)
 
+all: f0disco_demo.elf
+
 f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) Makefile
 	$(CC) $(CFLAGS) $(MCU_CFLAGS) \
 		$(LDFLAGS) -Wl,-Map=$@.map -o $@ \
