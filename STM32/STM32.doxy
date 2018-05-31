@@ -19,7 +19,9 @@
 
 @section stm32devices supported devices
 
-@subsection STM32F051R8 STM32F051R8 (f0discovery)
+@subsection STM32F051R8 STM32F051R8
+
+@see @ref f0discovery
 
 - F0: Cortex-M0 48Mhz
 - R: 64 pins
@@ -27,6 +29,18 @@
 - T: LQFP 
 - 6: -40..+85 C
 - 8K SRAM
+
+@subsection f0discovery f0discovery
+
+@ref STM32F051R8
+
+@see STM32F0_DISCOVERY
+
+Four LEDs: @ref STM32F0_DISCOVERY_LOW_LEVEL_LED
+- LD1 (red) for 3.3 V power on
+- LD2 (red/green) for USB communication
+- LD3 (green) for PC9 output
+- LD4 (blue) for PC8 output
 
 ![](http://shop.myavr.com/pic/galerie/stm32-f0-disc.png) 
 
