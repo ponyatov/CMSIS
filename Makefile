@@ -7,8 +7,11 @@ MCU_CFLAGS = $(F0_CFLAGS)
 MCU_LDSCRIPT = STM32F051R8_FLASH
 #MCU_LDSCRIPT = STM32L073VZTx_FLASH
 
-CC		= arm-none-eabi-gcc
-OBJDUMP	= arm-none-eabi-objdump
+TARGET = arm-none-eabi
+
+CC		= $(TARGET)-gcc
+GDB		= $(TARGET)-gdb
+OBJDUMP	= $(TARGET)-objdump
 
 CFLAGS	+= -Os -g -ffunction-sections -fdata-sections -I$(CURDIR)/include/STM32
 LDFLAGS	+= -Wl,--gc-sections -Wl,-T,lib/$(MCU_LDSCRIPT).ld -L$(CURDIR)/lib
@@ -35,6 +38,10 @@ LDS	+= lib/STM32L073VZTx_FLASH.ld lib/STM32F051R8_FLASH.ld
 SRC += $(S) $(C) $(H) $(LDS)
 
 all: f0disco_demo.elf
+
+deb: f0disco_demo.elf
+	# run st-util& as debug server
+	ddd ddd --debugger "$(GDB) -x lib/$(MCU_LDSCRIPT).gdb $<"
 
 f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) Makefile
 	$(CC) $(CFLAGS) $(MCU_CFLAGS) \
