@@ -8,10 +8,20 @@
  * */
 
 #include "stm32f0_discovery.h"
-#include "stm32f0xx.h"
-#include "stm32f0xx_gpio.h"
-#include "stm32f0xx_rcc.h"
+#include "stm32f0xx_hal.h"
+
+
+void GPIO_Init(void) {
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+
+}
 
 void main(void) {
+	GPIO_Init();
+	//RCC_APB2PeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+	//RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
+//	GPIO_StructInit(&GPIO_InitStruct);
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 	for(;;);
 }

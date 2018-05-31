@@ -12,14 +12,17 @@ TARGET = arm-none-eabi
 CC		= $(TARGET)-gcc
 GDB		= $(TARGET)-gdb
 OBJDUMP	= $(TARGET)-objdump
+AR		= $(TARGET)-ar
 
-CFLAGS	+= -Os -g -ffunction-sections -fdata-sections -I$(CURDIR)/include/STM32
+CFLAGS	+= -Os -g -ffunction-sections -fdata-sections
+CFLAGS	+= -I$(CURDIR)/include/STM32 -I$(CURDIR)/src
 LDFLAGS	+= -Wl,--gc-sections -Wl,-T,lib/$(MCU_LDSCRIPT).ld -L$(CURDIR)/lib
 
-LIB += lib/libSTM32.a
+LIB += lib/libSTM32F0.a
 
 OBJ	+= lib/startup_stm32f051x8.o lib/system_stm32f0xx.o
 OBJ	+= lib/startup_stm32l073xx.o lib/system_stm32l0xx.o
+OBJ	+= lib/stm32f0xx_hal_rcc.o
 
 S	+= src/STM32/startup_stm32f051x8.s	src/STM32/startup_stm32l073xx.s
 C	+= src/STM32/system_stm32f0xx.c		src/STM32/system_stm32l0xx.c
@@ -32,6 +35,16 @@ H	+= include/STM32/stm32f051x8.h		include/STM32/stm32l073xx.h
 H	+= include/STM32/core_cm0.h			include/STM32/core_cm0plus.h
 H	+= include/STM32/cmsis_gcc.h
 H	+= include/STM32/core_cmInstr.h include/STM32/core_cmFunc.h
+
+H	+= include/STM32/stm32f0xx_hal.h
+H	+= include/STM32/stm32f0xx_hal_def.h
+
+H	+= include/STM32/stm32f0xx_hal_rcc.h
+H	+= include/STM32/stm32f0xx_hal_rcc_ex.h
+C	+= src/STM32/stm32f0xx_hal_rcc.c
+
+H	+= include/STM32/stm32f0xx_hal_gpio.h
+H	+= include/STM32/stm32f0xx_hal_gpio_ex.h
 
 LDS	+= lib/STM32L073VZTx_FLASH.ld lib/STM32F051R8_FLASH.ld
 
@@ -46,11 +59,13 @@ deb: f0disco_demo.elf
 f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
 	$(CC) $(CFLAGS) $(MCU_CFLAGS) \
 		$(LDFLAGS) -Wl,-Map=$@.map -o $@ \
-		lib/startup_stm32f051x8.o lib/system_stm32f0xx.o \
+		lib/startup_stm32f051x8.o -lSTM32F0 \
 		$<
 	$(OBJDUMP) -x $@ > $@.objdump
 
 lib: $(LIB)
+lib/libSTM32F0.a:
+	$(AR) crs $@ lib/*stm32f0*.o	
 
 $(LIB): $(OBJ)
 
@@ -69,9 +84,11 @@ F0TMPL  = $(F0CMSIS)/Source/Templates
 L0TMPL  = $(L0CMSIS)/Source/Templates
 F0INCL	= $(F0CMSIS)/Include
 L0INCL	= $(L0CMSIS)/Include
-CMINCL	= STM32/STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Include
+CMINCL	= $(L0CUBE)/Drivers/CMSIS/Include
 F0PRJ	= $(F0CUBE)/Projects/STM32F070RB-Nucleo/Templates_LL
 L0PRJ	= $(L0CUBE)/Projects/STM32L073Z_EVAL/Templates_LL
+
+F0HAL	= $(F0CUBE)/Drivers/STM32F0xx_HAL_Driver
 
 #DISCO	= STM32/STM32F0-Discovery_FW_V1.0.0/Project/Demonstration/TrueSTUDIO/STM32F0-Discovery_Demo
 
@@ -89,12 +106,16 @@ src/STM32/%.c: $(F0TMPL)/%.c
 	cp $< $@
 src/STM32/%.c: $(L0TMPL)/%.c
 	cp $< $@
+src/STM32/%.c: $(F0HAL)/Src/%.c
+	cp $< $@
 	
 include/STM32/%.h: $(F0INCL)/%.h
 	cp $< $@
 include/STM32/%.h: $(L0INCL)/%.h
 	cp $< $@
 include/STM32/%.h: $(CMINCL)/%.h
+	cp $< $@
+include/STM32/%.h: $(F0HAL)/Inc/%.h
 	cp $< $@
 
 
