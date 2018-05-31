@@ -1,0 +1,121 @@
+/**
+
+@page cmfiles CMSIS/Files
+@brief project file structure
+
+```
+/lib
+```
+@ref libs
+```
+/lib/*.o
+```
+@ref ldscripts
+```
+/lib/*.ld
+```
+@ref gdb
+```
+/lib/*.gdb
+```
+```
+/include
+```
+```
+/src
+```
+
+This manual in .html
+
+```
+/docs
+```
+
+@section cmsisfiles CMSIS 
+
+```
+./include/STM32/core_cm0.h
+./include/STM32/core_cm0plus.h
+
+./include/STM32/cmsis_gcc.h
+./include/STM32/core_cmInstr.h
+./include/STM32/core_cmFunc.h
+```
+
+
+@subsection cmstmf0 STM32F0 
+
+```
+./include/STM32/stm32f0xx.h
+./include/STM32/system_stm32f0xx.h
+./include/STM32/stm32f051x8.h
+
+```
+
+@subsection cubef0 Cube F0 library
+
+```
+./STM32/en.stm32cubef0.zip
+./STM32/STM32Cube_FW_F0_V1.9.0
+```
+
+@subsection cmstml0 STM32L0 
+
+```
+./include/STM32/stm32l0xx.h
+./include/STM32/system_stm32l0xx.h
+./include/STM32/stm32l073xx.h
+```
+
+@subsection cibel0 Cube L0 library
+```
+./STM32/en.stm32cubel0.zip
+./STM32/STM32Cube_FW_L0_V1.10.0
+```
+
+@subsection stm32startup Startup code
+
+```
+./src/STM32/startup_stm32l073xx.s
+./src/STM32/system_stm32l0xx.c
+./src/STM32/startup_stm32f051x8.s
+./src/STM32/system_stm32f0xx.c
+```
+
+@section sample Sample code
+
+```
+./src/f0disco_demo.c
+./Makefile
+```
+
+@subsection f0code f0discovery sample code
+
+```
+./STM32/en.stm32f0discovery_fw.zip
+```
+
+@subsection ldscripts Linker scripts
+
+```
+./lib/STM32L073VZTx_FLASH.ld
+./lib/STM32F051R8_FLASH.ld
+```
+
+@subsection gdb Debugger scripts
+
+```
+./lib/STM32F051R8_FLASH.gdb
+```
+
+@subsection libs compiled libraries
+
+```
+./lib/system_stm32l0xx.o
+./lib/startup_stm32f051x8.o
+./lib/startup_stm32l073xx.o
+./lib/system_stm32f0xx.o
+```
+
+
+*/
