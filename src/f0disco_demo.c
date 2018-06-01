@@ -70,6 +70,7 @@ void init_LEDs(void) {
 	GPIO_InitStruct.Pull	= GPIO_NOPULL;
 	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(LED3_GPIO_PORT, &GPIO_InitStruct);
+
 	HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(LED4_GPIO_PORT, LED4_PIN, GPIO_PIN_SET);
 }
@@ -83,9 +84,10 @@ void init_oscill() {
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 	GPIO_InitStruct.Pin		= OSCILL_PIN;
 	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull	= GPIO_PULLUP;
-	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStruct.Pull	= GPIO_NOPULL;
+	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OSCILL_PORT, &GPIO_InitStruct);
+
 	HAL_GPIO_WritePin(OSCILL_PORT, OSCILL_PIN, GPIO_PIN_SET);
 
 }
@@ -98,7 +100,8 @@ void init(void) {
 }
 
 void loop(void) {
-	HAL_Delay(1000);
+//	HAL_Delay(1000);
+	HAL_GPIO_TogglePin(LED3_GPIO_PORT, LED4_PIN);
 	HAL_GPIO_TogglePin(LED4_GPIO_PORT, LED4_PIN);
 	HAL_GPIO_TogglePin(OSCILL_PORT, OSCILL_PIN);
 //	register uint8_t button =
