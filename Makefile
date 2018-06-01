@@ -20,13 +20,14 @@ LDFLAGS	+= -Wl,--gc-sections -Wl,-T,lib/$(MCU_LDSCRIPT).ld -L$(CURDIR)/lib
 
 LIB += lib/libSTM32F0.a
 
-OBJ	+= lib/startup_stm32f051x8.o lib/system_stm32f0xx.o
-OBJ	+= lib/startup_stm32l073xx.o lib/system_stm32l0xx.o
-OBJ	+= lib/stm32f0xx_hal.o
-OBJ	+= lib/stm32f0xx_hal_cortex.o
-OBJ	+= lib/stm32f0xx_hal_flash.o
-OBJ	+= lib/stm32f0xx_hal_flash_ex.o
-OBJ += lib/stm32f0xx_hal_rcc.o
+OBJ	+= tmp/startup_stm32f051x8.o tmp/system_stm32f0xx.o
+OBJ	+= tmp/startup_stm32l073xx.o tmp/system_stm32l0xx.o
+OBJ	+= tmp/stm32f0xx_hal.o
+OBJ	+= tmp/stm32f0xx_hal_cortex.o
+OBJ	+= tmp/stm32f0xx_hal_flash.o
+OBJ	+= tmp/stm32f0xx_hal_flash_ex.o
+OBJ += tmp/stm32f0xx_hal_rcc.o
+OBJ += tmp/stm32f0xx_hal_gpio.o
 
 S	+= src/STM32/startup_stm32f051x8.s	src/STM32/startup_stm32l073xx.s
 C	+= src/STM32/system_stm32f0xx.c		src/STM32/system_stm32l0xx.c
@@ -40,6 +41,7 @@ H	+= include/STM32/core_cm0.h			include/STM32/core_cm0plus.h
 H	+= include/STM32/cmsis_gcc.h
 H	+= include/STM32/core_cmInstr.h include/STM32/core_cmFunc.h
 
+H	+= src/stm32f0xx_hal_conf.h
 H	+= include/STM32/stm32f0xx_hal.h
 C	+= src/STM32/stm32f0xx_hal.c
 H	+= include/STM32/stm32f0xx_hal_def.h
@@ -56,6 +58,7 @@ C	+= src/STM32/stm32f0xx_hal_rcc.c
 
 H	+= include/STM32/stm32f0xx_hal_gpio.h
 H	+= include/STM32/stm32f0xx_hal_gpio_ex.h
+C	+= src/STM32/stm32f0xx_hal_gpio.c
 
 LDS	+= lib/STM32L073VZTx_FLASH.ld lib/STM32F051R8_FLASH.ld
 
@@ -75,7 +78,7 @@ f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
 
 lib: $(LIB)
 lib/libSTM32F0.a:
-	$(AR) crs $@ lib/*stm32f0*.o	
+	$(AR) crs $@ tmp/*stm32f0*.o	
 
 $(LIB): $(OBJ)
 
@@ -129,19 +132,19 @@ include/STM32/%.h: $(F0HAL)/Inc/%.h
 	cp $< $@
 
 
-lib/system_stm32f0xx.o: src/STM32/system_stm32f0xx.c Makefile
+tmp/system_stm32f0xx.o: src/STM32/system_stm32f0xx.c Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
-lib/system_stm32l0xx.o: src/STM32/system_stm32l0xx.c Makefile
+tmp/system_stm32l0xx.o: src/STM32/system_stm32l0xx.c Makefile
 	$(CC) $(CFLAGS) $(L0_CFLAGS) -c -o $@ $<
 	
-lib/startup_stm32f051x8.o: src/STM32/startup_stm32f051x8.s Makefile
+tmp/startup_stm32f051x8.o: src/STM32/startup_stm32f051x8.s Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
-lib/startup_stm32l073xx.o: src/STM32/startup_stm32l073xx.s Makefile
+tmp/startup_stm32l073xx.o: src/STM32/startup_stm32l073xx.s Makefile
 	$(CC) $(CFLAGS) $(L0_CFLAGS) -c -o $@ $<
 	
-lib/%.o: src/STM32/%.c Makefile 
+tmp/%.o: src/STM32/%.c Makefile 
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
-lib/%.o: src/STM32/%.s Makefile
+tmp/%.o: src/STM32/%.s Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
 
 doxy:
