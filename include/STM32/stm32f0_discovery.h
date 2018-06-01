@@ -82,11 +82,11 @@ typedef enum
   */
 #define LEDn                             2
   
-#define LED3_PIN                         GPIO_Pin_9
+#define LED3_PIN                         GPIO_PIN_9
 #define LED3_GPIO_PORT                   GPIOC
 #define LED3_GPIO_CLK                    RCC_AHBPeriph_GPIOC
   
-#define LED4_PIN                         GPIO_Pin_8
+#define LED4_PIN                         GPIO_PIN_8
 #define LED4_GPIO_PORT                   GPIOC
 #define LED4_GPIO_CLK                    RCC_AHBPeriph_GPIOC
 
@@ -102,7 +102,7 @@ typedef enum
 /**
  * @brief USER push-button
  */
-#define USER_BUTTON_PIN                GPIO_Pin_0
+#define USER_BUTTON_PIN                GPIO_PIN_0
 #define USER_BUTTON_GPIO_PORT          GPIOA
 #define USER_BUTTON_GPIO_CLK           RCC_AHBPeriph_GPIOA
 #define USER_BUTTON_EXTI_LINE          EXTI_Line0

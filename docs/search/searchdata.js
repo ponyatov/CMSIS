@@ -1,24 +1,33 @@
 var indexSectionsWithContent =
 {
-  0: "cfhlstu",
-  1: "fs",
-  2: "csu",
-  3: "c"
+  0: "_acfghilmoprstu",
+  1: "gr",
+  2: "fs",
+  3: "achlmops",
+  4: "g",
+  5: "acfghilmoprsu",
+  6: "c"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "files",
-  2: "groups",
-  3: "pages"
+  1: "classes",
+  2: "files",
+  3: "variables",
+  4: "enums",
+  5: "groups",
+  6: "pages"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Files",
-  2: "Modules",
-  3: "Pages"
+  1: "Classes",
+  2: "Files",
+  3: "Variables",
+  4: "Enumerations",
+  5: "Modules",
+  6: "Pages"
 };
 

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['user_5fbutton_5fpin',['USER_BUTTON_PIN',['../group__SSTM32F0__DISCOVERY__LOW__LEVEL__BUTTON.html#ga34df6915e3013d6a0c74131d3946b659',1,'stm32f0_discovery.h']]],
-  ['utilities',['Utilities',['../group__Utilities.html',1,'']]]
+  ['initialization_2fde_2dinitialization_20functions',['Initialization/de-initialization functions',['../group__GPIO__Exported__Functions__Group1.html',1,'']]],
+  ['io_20operation_20functions',['IO operation functions',['../group__GPIO__Exported__Functions__Group2.html',1,'']]],
+  ['interrupts',['Interrupts',['../group__RCC__Interrupt.html',1,'']]]
 ];

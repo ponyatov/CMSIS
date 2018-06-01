@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['nvic_20functions',['NVIC Functions',['../group__CMSIS__Core__NVICFunctions.html',1,'']]],
-  ['nested_20vectored_20interrupt_20controller_20_28nvic_29',['Nested Vectored Interrupt Controller (NVIC)',['../group__CMSIS__NVIC.html',1,'']]]
+  ['initialization_2fde_2dinitialization_20functions',['Initialization/de-initialization functions',['../group__GPIO__Exported__Functions__Group1.html',1,'']]],
+  ['io_20operation_20functions',['IO operation functions',['../group__GPIO__Exported__Functions__Group2.html',1,'']]],
+  ['interrupts',['Interrupts',['../group__RCC__Interrupt.html',1,'']]]
 ];
