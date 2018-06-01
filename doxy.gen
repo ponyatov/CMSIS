@@ -791,7 +791,8 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = README.md CMSIS.doxy STM32/STM32.doxy files.doxy \
-						src/f0disco_demo.c include/STM32/stm32f0_discovery.h
+						src/f0disco_demo.c include/STM32/stm32f0_discovery.h \
+						src/stm32f0xx_hal_conf.h
 #						include/STM32 
 
 # This tag can be used to specify the character encoding of the source files

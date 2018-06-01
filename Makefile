@@ -22,7 +22,11 @@ LIB += lib/libSTM32F0.a
 
 OBJ	+= lib/startup_stm32f051x8.o lib/system_stm32f0xx.o
 OBJ	+= lib/startup_stm32l073xx.o lib/system_stm32l0xx.o
-OBJ	+= lib/stm32f0xx_hal_rcc.o
+OBJ	+= lib/stm32f0xx_hal.o
+OBJ	+= lib/stm32f0xx_hal_cortex.o
+OBJ	+= lib/stm32f0xx_hal_flash.o
+OBJ	+= lib/stm32f0xx_hal_flash_ex.o
+OBJ += lib/stm32f0xx_hal_rcc.o
 
 S	+= src/STM32/startup_stm32f051x8.s	src/STM32/startup_stm32l073xx.s
 C	+= src/STM32/system_stm32f0xx.c		src/STM32/system_stm32l0xx.c
@@ -37,7 +41,14 @@ H	+= include/STM32/cmsis_gcc.h
 H	+= include/STM32/core_cmInstr.h include/STM32/core_cmFunc.h
 
 H	+= include/STM32/stm32f0xx_hal.h
+C	+= src/STM32/stm32f0xx_hal.c
 H	+= include/STM32/stm32f0xx_hal_def.h
+H	+= include/STM32/stm32f0xx_hal_cortex.h
+C	+= src/STM32/stm32f0xx_hal_cortex.c
+H	+= include/STM32/stm32f0xx_hal_flash.h
+H	+= include/STM32/stm32f0xx_hal_flash_ex.h
+C	+= src/STM32/stm32f0xx_hal_flash.c
+C	+= src/STM32/stm32f0xx_hal_flash_ex.c
 
 H	+= include/STM32/stm32f0xx_hal_rcc.h
 H	+= include/STM32/stm32f0xx_hal_rcc_ex.h
@@ -61,7 +72,6 @@ f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
 		$(LDFLAGS) -Wl,-Map=$@.map \
 			$< -lSTM32F0
 	$(OBJDUMP) -x $@ > $@.objdump
-#		lib/startup_stm32f051x8.o -lSTM32F0 \
 
 lib: $(LIB)
 lib/libSTM32F0.a:

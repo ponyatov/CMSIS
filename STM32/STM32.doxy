@@ -44,7 +44,10 @@ Four LEDs: @ref STM32F0_DISCOVERY_LOW_LEVEL_LED
 
 ![](http://shop.myavr.com/pic/galerie/stm32-f0-disc.png) 
 
-@subsection STM32F073VZ STM32F073VZ (AcSip S76 module)
+@subsection AcSipS76 AcSip S76 module
+
+- @ref STM32F073VZ
+- @ref SX1276
 
 @see <a href="http://www.acsip.com.tw/index.php?action=products-detail&fid1=19&fid2=&fid3=&id=79">AcSip S76</a> module: with @ref SX1276
 

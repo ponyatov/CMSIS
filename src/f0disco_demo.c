@@ -12,6 +12,9 @@
 
 
 void GPIO_Init(void) {
+
+	HAL_Init();
+
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 
