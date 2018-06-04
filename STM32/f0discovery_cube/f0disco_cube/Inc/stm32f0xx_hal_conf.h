@@ -1,12 +1,3 @@
-/** @file
-- * @brief HAL configurator for STM32F0 samples
-- *
-- * @defgroup STM32F0_DISCOVERY_HAL_CONFIG
-- * @brief `src/stm32f0xx_hal_conf.h`
-- * @ingroup STM32F0_DISCOVERY
-- * @{
-- * */
-
 /**
   ******************************************************************************
   * @file    stm32f0xx_hal_conf.h
@@ -174,7 +165,7 @@
                                                                               /*  Warning: Must be set to higher priority for HAL_Delay()  */
                                                                               /*  and HAL_GetTick() usage under interrupt context          */
 #define  USE_RTOS                     0     
-#define  PREFETCH_ENABLE              0
+#define  PREFETCH_ENABLE              1              
 #define  INSTRUCTION_CACHE_ENABLE     0
 #define  DATA_CACHE_ENABLE            0
 /* ########################## Assert Selection ############################## */
@@ -326,5 +317,3 @@
 #endif /* __STM32F0xx_HAL_CONF_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-
-/// @}
