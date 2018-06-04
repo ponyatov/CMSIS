@@ -6,6 +6,6 @@
 - @ref f0discovery
   - @ref STM32F051R8
 - @ref AcSipS76
-  - @ref STM32F073VZ
+  - @ref STM32L073VZ
   - @ref SX1276
   

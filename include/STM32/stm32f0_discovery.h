@@ -49,20 +49,23 @@
   * @{
   */ 
 
-/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Types
+/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Types Exported_Types
   * @{
   */
+/// Led_TypeDef
 typedef enum 
 {
   LED3 = 0,
   LED4 = 1
 } Led_TypeDef;
 
+/// Button_TypeDef
 typedef enum 
 {
   BUTTON_USER = 0,
 } Button_TypeDef;
 
+/// ButtonMode_TypeDef
 typedef enum 
 {  
   BUTTON_MODE_GPIO = 0,
@@ -73,41 +76,59 @@ typedef enum
   * @}
   */ 
 
-/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Constants
+/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Constants Exported_Constants
   * @{
   */ 
 
 /** @addtogroup STM32F0_DISCOVERY_LOW_LEVEL_LED
   * @{
   */
+
+/// number of LEDs
 #define LEDn                             2
-  
+
+/// LED3 pin
 #define LED3_PIN                         GPIO_PIN_9
+/// LED3 port C
 #define LED3_GPIO_PORT                   GPIOC
+/// LED3 port clock
 #define LED3_GPIO_CLK                    RCC_AHBPeriph_GPIOC
   
+/// LED4 pin
 #define LED4_PIN                         GPIO_PIN_8
+/// LED4 port C
 #define LED4_GPIO_PORT                   GPIOC
+/// LED4 port clock
 #define LED4_GPIO_CLK                    RCC_AHBPeriph_GPIOC
 
 /**
   * @}
   */ 
 
-/** @addtogroup SSTM32F0_DISCOVERY_LOW_LEVEL_BUTTON
+/** @addtogroup SSTM32F0_DISCOVERY_LOW_LEVEL_BUTTON BUTTON
   * @{
   */  
+
+/// one button
 #define BUTTONn                          1
 
 /**
  * @brief USER push-button
  */
+
+/// button pin 0
 #define USER_BUTTON_PIN                GPIO_PIN_0
+/// button port A
 #define USER_BUTTON_GPIO_PORT          GPIOA
+/// GPIO clock
 #define USER_BUTTON_GPIO_CLK           RCC_AHBPeriph_GPIOA
+/// line0
 #define USER_BUTTON_EXTI_LINE          EXTI_Line0
+/// port source
 #define USER_BUTTON_EXTI_PORT_SOURCE   EXTI_PortSourceGPIOA
+/// pin source
 #define USER_BUTTON_EXTI_PIN_SOURCE    EXTI_PinSource0
+/// pin IRQ
 #define USER_BUTTON_EXTI_IRQn          EXTI0_1_IRQn 
 
 /**
@@ -115,21 +136,28 @@ typedef enum
   */ 
   
     
-/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Macros
+/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Macros Exported_Macros
   * @{
   */  
 /**
   * @}
   */ 
 
-/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Functions
+/** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Functions Exported_Functions
   * @{
   */
+
+/// initialize LEDs
 void STM_EVAL_LEDInit(Led_TypeDef Led);
+/// switch on
 void STM_EVAL_LEDOn(Led_TypeDef Led);
+/// switch off
 void STM_EVAL_LEDOff(Led_TypeDef Led);
+/// toggle LED
 void STM_EVAL_LEDToggle(Led_TypeDef Led);
+/// initialize button
 void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode);
+/// get button state
 uint32_t STM_EVAL_PBGetState(Button_TypeDef Button);
 
 /**
@@ -154,3 +182,5 @@ uint32_t STM_EVAL_PBGetState(Button_TypeDef Button);
   */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+/// @}

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['clocktype',['ClockType',['../structRCC__ClkInitTypeDef.html#a93a53676a1cfc5b55b8b990e7ff4dac5',1,'RCC_ClkInitTypeDef']]],
-  ['cmsis_2ffiles',['CMSIS/Files',['../cmfiles.html',1,'']]],
-  ['cmsis',['CMSIS',['../group__cmsis.html',1,'(Global Namespace)'],['../CMSIS.html',1,'(Global Namespace)']]],
-  ['cmsis',['CMSIS',['../index.html',1,'']]],
-  ['cmsis_2fstm32',['CMSIS/STM32',['../STM32.html',1,'']]]
+  ['exported_5fconstants',['Exported_Constants',['../group__STM32F0__DISCOVERY__LOW__LEVEL__Exported__Constants.html',1,'']]],
+  ['exported_5ffunctions',['Exported_Functions',['../group__STM32F0__DISCOVERY__LOW__LEVEL__Exported__Functions.html',1,'']]],
+  ['exported_5fmacros',['Exported_Macros',['../group__STM32F0__DISCOVERY__LOW__LEVEL__Exported__Macros.html',1,'']]],
+  ['exported_5ftypes',['Exported_Types',['../group__STM32F0__DISCOVERY__LOW__LEVEL__Exported__Types.html',1,'']]]
 ];

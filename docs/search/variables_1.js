@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['clocktype',['ClockType',['../structRCC__ClkInitTypeDef.html#a93a53676a1cfc5b55b8b990e7ff4dac5',1,'RCC_ClkInitTypeDef']]]
+  ['mode',['Mode',['../structGPIO__InitTypeDef.html#a3731d84343e65a98fdf51056a8d30321',1,'GPIO_InitTypeDef']]]
 ];

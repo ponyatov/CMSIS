@@ -13,7 +13,7 @@
 
   - STM32Cube_FW_F0_V1.9.0/Drivers/CMSIS/Device/ST/STM32F0xx/Source/Templates/gcc/startup_stm32f051x8.s
   
-- /CMSIS/STM32/en.stm32cubel0.zip (@ref STM32F073VZ) Cortex-M0+
+- /CMSIS/STM32/en.stm32cubel0.zip (@ref STM32L073VZ) Cortex-M0+
 
   - STM32Cube_FW_L0_V1.10.0/Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/gcc/startup_stm32l073xx.s
 
@@ -29,6 +29,14 @@
 - T: LQFP 
 - 6: -40..+85 C
 - 8K SRAM
+
+@subsection STM32L073VZ STM32L073VZ
+
+@see @ref AcSipS76
+
+- L0: Low-Power Cortex-M0+
+- 192K Flash
+- 20K SRAM
 
 @subsection f0discovery f0discovery
 
@@ -46,7 +54,7 @@ Four LEDs: @ref STM32F0_DISCOVERY_LOW_LEVEL_LED
 
 @subsection AcSipS76 AcSip S76 module
 
-- @ref STM32F073VZ
+- @ref STM32L073VZ
 - @ref SX1276
 
 @see <a href="http://www.acsip.com.tw/index.php?action=products-detail&fid1=19&fid2=&fid3=&id=79">AcSip S76</a> module: with @ref SX1276

@@ -10,6 +10,7 @@
 #include "stm32f0_discovery.h"
 #include "stm32f0xx_hal.h"
 
+/// configure system clock
 void SystemClock_Config(void){
 
 	// setup oscillator source
@@ -42,11 +43,13 @@ void SystemClock_Config(void){
 
 }
 
+/// initialize only HAL and clock
 void init_core(void) {
 	HAL_Init();
 	SystemClock_Config();
 }
 
+/// init buttons
 void init_buttons(void) {
 
 	__HAL_RCC_GPIOC_CLK_ENABLE();
@@ -59,6 +62,7 @@ void init_buttons(void) {
 	HAL_GPIO_Init(USER_BUTTON_GPIO_PORT, &GPIO_InitStruct);
 }
 
+/// init LEDs
 void init_LEDs(void) {
 
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -75,8 +79,11 @@ void init_LEDs(void) {
 	HAL_GPIO_WritePin(LED4_GPIO_PORT, LED4_PIN, GPIO_PIN_SET);
 }
 
+/// oscilloscope connection pin
 #define OSCILL_PIN GPIO_PIN_9
+/// oscilloscope connection port
 #define OSCILL_PORT GPIOA
+/// init oscilloscope output
 void init_oscill() {
 
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -92,6 +99,7 @@ void init_oscill() {
 
 }
 
+/// initizalize system in a whole
 void init(void) {
 	init_core();
 	init_buttons();
@@ -99,6 +107,7 @@ void init(void) {
 	init_LEDs();
 }
 
+/// event loop
 void loop(void) {
 //	HAL_Delay(1000);
 	HAL_GPIO_TogglePin(LED3_GPIO_PORT, LED4_PIN);
@@ -110,6 +119,7 @@ void loop(void) {
 //	else		HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, GPIO_PIN_RESET);
 }
 
+/// firmware entry point
 void main(void) {
 	init();
 	for(;;) loop;
