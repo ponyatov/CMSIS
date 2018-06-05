@@ -162,6 +162,6 @@ tmp/%.o: src/STM32/%.s Makefile
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
 
 doxy:
-	doxygen doxy.gen >/dev/null 
+	rm -rf doxy ; doxygen doxy.gen >/dev/null 
 #	2>doxy.log
 #	cat doxy.log | egrep -v "STM32F0_DISCOVERY_LOW_LEVEL_LED" 
