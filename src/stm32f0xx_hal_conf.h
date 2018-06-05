@@ -1,6 +1,9 @@
 /** @file
 - * @brief HAL configurator for STM32F0 samples
 - *
+- * stm32f0xx_hal_conf is shared file for all projects based on STM32F0xxx
+- * check defines
+- *
 - * @defgroup STM32F0_DISCOVERY_HAL_CONFIG
 - * @brief `src/stm32f0xx_hal_conf.h`
 - * @ingroup STM32F0_DISCOVERY
@@ -58,6 +61,17 @@
   * @brief This is the list of modules to be used in the HAL driver 
   */
 #define HAL_MODULE_ENABLED  
+#define HAL_CORTEX_MODULE_ENABLED
+#define HAL_DMA_MODULE_ENABLED
+#define HAL_FLASH_MODULE_ENABLED
+#define HAL_GPIO_MODULE_ENABLED
+#define HAL_RCC_MODULE_ENABLED
+#define HAL_UART_MODULE_ENABLED
+/*#define HAL_RTC_MODULE_ENABLED   */
+/*#define HAL_SPI_MODULE_ENABLED   */
+/*#define HAL_TIM_MODULE_ENABLED   */
+//#define HAL_PWR_MODULE_ENABLED
+/*#define HAL_USART_MODULE_ENABLED   */
 /*#define HAL_ADC_MODULE_ENABLED   */
 /*#define HAL_CRYP_MODULE_ENABLED   */
 /*#define HAL_CAN_MODULE_ENABLED   */
@@ -72,23 +86,12 @@
 /*#define HAL_LCD_MODULE_ENABLED   */
 /*#define HAL_LPTIM_MODULE_ENABLED   */
 /*#define HAL_RNG_MODULE_ENABLED   */
-/*#define HAL_RTC_MODULE_ENABLED   */
-/*#define HAL_SPI_MODULE_ENABLED   */
-/*#define HAL_TIM_MODULE_ENABLED   */
-#define HAL_UART_MODULE_ENABLED
-/*#define HAL_USART_MODULE_ENABLED   */
 /*#define HAL_IRDA_MODULE_ENABLED   */
 /*#define HAL_SMARTCARD_MODULE_ENABLED   */
 /*#define HAL_SMBUS_MODULE_ENABLED   */
 /*#define HAL_WWDG_MODULE_ENABLED   */
 /*#define HAL_PCD_MODULE_ENABLED   */
-#define HAL_CORTEX_MODULE_ENABLED
-#define HAL_DMA_MODULE_ENABLED
-#define HAL_FLASH_MODULE_ENABLED
-#define HAL_GPIO_MODULE_ENABLED
-#define HAL_PWR_MODULE_ENABLED
-#define HAL_RCC_MODULE_ENABLED
-#define HAL_I2C_MODULE_ENABLED
+//#define HAL_I2C_MODULE_ENABLED
 
 /* ########################## HSE/HSI Values adaptation ##################### */
 /**

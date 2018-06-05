@@ -10,9 +10,6 @@
 #include "stm32f0_discovery.h"
 #include "stm32f0xx_hal.h"
 
-void init_SysTick(void) {
-}
-
 /// @brief System Clock Configuration
 void SystemClock_Config(void) {
 
@@ -33,7 +30,7 @@ void SystemClock_Config(void) {
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 		_Error_Handler(__FILE__, __LINE__);
 
-	// Initializes the CPU clock
+	// Initializes the CPU clock, AHB and APB peripheral busses clocks
 
     RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
@@ -46,16 +43,11 @@ void SystemClock_Config(void) {
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
     	_Error_Handler(__FILE__, __LINE__);
 
-	// Initializes AHB and APB peripheral busses clocks
-
-//	RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
-
     // SysTick
+
     HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);			// interrupt time
     HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);	// clock
     HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);				// IRQ
-
-    init_SysTick();
 
 }
 
@@ -69,7 +61,6 @@ void init_core(void) {
 
 /// init GPIO
 void init_GPIO(void) {
-
 }
 
 // init UART
@@ -89,50 +80,66 @@ void init_UARTs(void) {
 /// init buttons
 void init_buttons(void) {
 
-	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();	// USER_BUTTON_GPIO_PORT			GPIOA
 
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
-	GPIO_InitStruct.Pin		= USER_BUTTON_PIN;
-	GPIO_InitStruct.Mode	= GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull	= GPIO_NOPULL;			// pulls done in scheme
+
+	/* Configure USER_BUTTON */
+	GPIO_InitStruct.Pin		= B1_Pin;
+	GPIO_InitStruct.Mode	= GPIO_MODE_EVT_RISING;
+	GPIO_InitStruct.Pull	= GPIO_NOPULL;
 	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(USER_BUTTON_GPIO_PORT, &GPIO_InitStruct);
+	HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /// init LEDs
 void init_LEDs(void) {
 
-	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();	// LED3_GPIO_PORT LED4_GPIO_PORT	GPIOC
 
-	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+	GPIO_InitTypeDef GPIO_InitStruct;
 
-	GPIO_InitStruct.Pin		= LED3_PIN|LED4_PIN;	// LEDs
-	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;	// push/pull
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOC, LD3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, LD4_Pin, GPIO_PIN_SET);
+
+	/*Configure LED3_GPIO LED4_GPIO */
+	GPIO_InitStruct.Pin		= LD4_Pin|LD3_Pin;
+	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull	= GPIO_NOPULL;
-	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_HIGH;
-	HAL_GPIO_Init(LED3_GPIO_PORT, &GPIO_InitStruct);
+	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
 
-	HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(LED4_GPIO_PORT, LED4_PIN, GPIO_PIN_SET);
+	/* LED3_GPIO LED4_GPIO */
+	GPIO_InitStruct.Pin		= LD4_Pin|LD3_Pin;
+	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull	= GPIO_NOPULL;
+	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /// oscilloscope connection pin
-#define OSCILL_PIN GPIO_PIN_9
+#define OSCILL_PIN		GPIO_PIN_9
 /// oscilloscope connection port
-#define OSCILL_PORT GPIOA
+#define OSCILL_PORT		GPIOA
+
 /// init oscilloscope output
 void init_oscill() {
 
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 
-	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* OSCILL_PIN */
 	GPIO_InitStruct.Pin		= OSCILL_PIN;
 	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull	= GPIO_NOPULL;
 	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(OSCILL_PORT, &GPIO_InitStruct);
 
-	HAL_GPIO_WritePin(OSCILL_PORT, OSCILL_PIN, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(OSCILL_PORT, OSCILL_PIN, GPIO_PIN_RESET);
 
 }
 
@@ -154,29 +161,42 @@ void _Error_Handler(char *file, int line)
 
 /// initizalize system in a whole
 void init(void) {
-	init_core();
-	init_GPIO();
-	init_UARTs();
 
-//	init_buttons();
-//	init_oscill();
+	init_buttons();
+	init_oscill();
 	init_LEDs();
+
+}
+
+void SysTick_Handler(void)
+{
+	HAL_IncTick(); HAL_SYSTICK_IRQHandler();		// don't delete (!)
+	HAL_GPIO_TogglePin(OSCILL_PORT, OSCILL_PIN);
+}
+
+/// LED3 blink demo
+void demo_blink(void) {
+	HAL_Delay(500);
+	HAL_GPIO_TogglePin(LED_GPIO_Port, LD3_Pin);
+}
+
+/// button -> LED3 copy demo
+void demo_button(void) {
+	register uint8_t button = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+	if (button)	HAL_GPIO_WritePin(LED_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+	else		HAL_GPIO_WritePin(LED_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
 }
 
 /// event loop
 void loop(void) {
-//	HAL_Delay(1000);
-	HAL_GPIO_TogglePin(LED3_GPIO_PORT, LED4_PIN);
-	HAL_GPIO_TogglePin(LED4_GPIO_PORT, LED4_PIN);
-	HAL_GPIO_TogglePin(OSCILL_PORT, OSCILL_PIN);
-//	register uint8_t button =
-//				HAL_GPIO_ReadPin(USER_BUTTON_GPIO_PORT, USER_BUTTON_PIN);
-//	if (button)	HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, GPIO_PIN_SET);
-//	else		HAL_GPIO_WritePin(LED3_GPIO_PORT, LED3_PIN, GPIO_PIN_RESET);
+//	demo_blink();
+//	demo_button();
+	HAL_Delay(500);
 }
 
 /// firmware entry point
 void main(void) {
-	init();
-	for(;;) loop;
+	init_core(); init_GPIO(); init_UARTs();		// don't delete
+	init();										// user init()
+	for(;;) loop();								// user loop()
 }
