@@ -1,3 +1,8 @@
 <map id="STM32" name="STM32">
-<area shape="rect" id="node1" href="$group__cmsis.html" title="Cortex&#45;M microcontrollers support (embedded/IoT) " alt="" coords="5,5,71,32"/>
+<area shape="rect" id="node1" href="$group__led.html" title="LEDs. " alt="" coords="240,5,288,32"/>
+<area shape="rect" id="node2" href="$group__gpio.html" title="GPIO" alt="" coords="237,56,291,83"/>
+<area shape="rect" id="node3" href="$group__button.html" title="Buttons. " alt="" coords="231,107,297,133"/>
+<area shape="rect" id="node4" href="$group__clock.html" title="Clock" alt="" coords="236,157,292,184"/>
+<area shape="rect" id="node5" href="$group__uart.html" title="Serial, and RS485/MODBUS. " alt="" coords="235,208,293,235"/>
+<area shape="rect" id="node6" href="$group__cmsis.html" title="Cortex&#45;M microcontrollers support (embedded/IoT) " alt="" coords="5,107,71,133"/>
 </map>

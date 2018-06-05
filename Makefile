@@ -16,7 +16,7 @@ AR		= $(TARGET)-ar
 
 DEBUG	+= -O0 -g
 CFLAGS	+= $(DEBUG) -ffunction-sections -fdata-sections
-CFLAGS	+= -I$(CURDIR)/include/STM32 -I$(CURDIR)/src
+CFLAGS	+= -I$(CURDIR)/include/STM32 -I$(CURDIR)/include -I$(CURDIR)/src
 LDFLAGS	+= -Wl,--gc-sections -Wl,-T,lib/$(MCU_LDSCRIPT).ld -L$(CURDIR)/lib
 
 LIB += lib/libSTM32F0.a
@@ -30,6 +30,7 @@ OBJ	+= tmp/stm32f0xx_hal_flash_ex.o
 OBJ += tmp/stm32f0xx_hal_rcc.o
 OBJ += tmp/stm32f0xx_hal_rcc_ex.o
 OBJ += tmp/stm32f0xx_hal_gpio.o
+OBJ	+= tmp/f0discovery.o
 
 S	+= src/STM32/startup_stm32f051x8.s	src/STM32/startup_stm32l073xx.s
 C	+= src/STM32/system_stm32f0xx.c		src/STM32/system_stm32l0xx.c
@@ -43,7 +44,7 @@ H	+= include/STM32/core_cm0.h			include/STM32/core_cm0plus.h
 H	+= include/STM32/cmsis_gcc.h
 H	+= include/STM32/core_cmInstr.h include/STM32/core_cmFunc.h
 
-H	+= src/stm32f0xx_hal_conf.h
+H	+= include/stm32f0xx_hal_conf.h
 H	+= include/STM32/stm32f0xx_hal.h
 C	+= src/STM32/stm32f0xx_hal.c
 H	+= include/STM32/stm32f0xx_hal_def.h
@@ -95,7 +96,7 @@ f0disco_demo.elf: src/f0disco_demo.c $(H) $(LIB) lib/$(MCU_LDSCRIPT).ld Makefile
 
 lib: $(LIB)
 lib/libSTM32F0.a:
-	$(AR) crs $@ tmp/*stm32f0*.o	
+	$(AR) crs $@ tmp/*stm32f0*.o tmp/f0discovery.o
 
 $(LIB): $(OBJ)
 
@@ -159,6 +160,8 @@ tmp/startup_stm32f051x8.o: src/STM32/startup_stm32f051x8.s Makefile
 tmp/startup_stm32l073xx.o: src/STM32/startup_stm32l073xx.s Makefile
 	$(CC) $(CFLAGS) $(L0_CFLAGS) -c -o $@ $<
 	
+tmp/%.o: src/%.c Makefile 
+	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
 tmp/%.o: src/STM32/%.c Makefile 
 	$(CC) $(CFLAGS) $(F0_CFLAGS) -c -o $@ $<
 tmp/%.o: src/STM32/%.s Makefile

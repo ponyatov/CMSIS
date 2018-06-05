@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['loop',['loop',['../f0disco__demo_8c.html#a0b33edabd7f1c4e4a0bf32c67269be2f',1,'f0disco_demo.c']]]
+  ['demo_5fblink',['demo_blink',['../group__cmsis.html#gae61826de74592139158461c9b34ae57a',1,'f0discovery.c']]],
+  ['demo_5fbutton',['demo_button',['../group__cmsis.html#ga91b1165ae97d61136d1f750aedec8a91',1,'f0discovery.c']]]
 ];

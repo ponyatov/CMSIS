@@ -1,4 +1,27 @@
 /**
+ *
+ * @defgroup clock Clock
+ * @ingroup stm32
+ *
+ * @defgroup gpio GPIO
+ * @ingroup stm32
+ *
+ * @defgroup uart UART
+ * @brief Serial, and RS485/MODBUS
+ * @ingroup stm32
+ *
+ * @defgroup led LED
+ * @brief LEDs
+ * @ingroup stm32
+ *
+ * @defgroup button Buttons
+ * @brief Buttons
+ * @ingroup stm32
+ *
+ *
+ * */
+
+/**
   ******************************************************************************
   * @file    stm32f0_discovery.h
   * @author  MCD Application Team
@@ -53,6 +76,7 @@
   * @{
   */
 /// Led_TypeDef
+/// @ingroup led
 typedef enum 
 {
   LED3 = 0,
@@ -60,12 +84,14 @@ typedef enum
 } Led_TypeDef;
 
 /// Button_TypeDef
+/// @ingroup button
 typedef enum 
 {
   BUTTON_USER = 0,
 } Button_TypeDef;
 
 /// ButtonMode_TypeDef
+/// @ingroup button
 typedef enum 
 {  
   BUTTON_MODE_GPIO = 0,
@@ -84,6 +110,9 @@ typedef enum
   * @{
   */
 
+/// @ingroup led
+/// @{
+
 /// number of LEDs
 #define LEDn                             2
 
@@ -101,6 +130,8 @@ typedef enum
 /// LED4 port clock
 #define LED4_GPIO_CLK                    RCC_AHBPeriph_GPIOC
 
+/// @}
+
 /**
   * @}
   */ 
@@ -108,6 +139,9 @@ typedef enum
 /** @addtogroup SSTM32F0_DISCOVERY_LOW_LEVEL_BUTTON BUTTON
   * @{
   */  
+
+/// @ingroup button
+/// @{
 
 /// one button
 #define BUTTONn                          1
@@ -129,13 +163,31 @@ typedef enum
 /// pin source
 #define USER_BUTTON_EXTI_PIN_SOURCE    EXTI_PinSource0
 /// pin IRQ
-#define USER_BUTTON_EXTI_IRQn          EXTI0_1_IRQn 
+#define USER_BUTTON_EXTI_IRQn          EXTI0_1_IRQn
+
+/// @}
 
 /**
   * @}
   */ 
   
-    
+/// @ingroup uart
+/// @{
+
+/// USART1_TX
+#define PA9								GPIO_PIN_9
+#define USART1_TX_PIN					PA9
+/// USART1 RX
+#define PA10							GPIO_PIN_10
+#define USART1_RX_PIN					PA10
+/// USART1 PORT
+#define USART1_PORT						GPIOA
+
+/// USART1 Baud
+#define USART1_RX_BAUD					115200
+
+/// @}
+
 /** @defgroup STM32F0_DISCOVERY_LOW_LEVEL_Exported_Macros Exported_Macros
   * @{
   */  
@@ -147,6 +199,9 @@ typedef enum
   * @{
   */
 
+/// @ingroup led
+/// @{
+
 /// initialize LEDs
 void STM_EVAL_LEDInit(Led_TypeDef Led);
 /// switch on
@@ -155,10 +210,18 @@ void STM_EVAL_LEDOn(Led_TypeDef Led);
 void STM_EVAL_LEDOff(Led_TypeDef Led);
 /// toggle LED
 void STM_EVAL_LEDToggle(Led_TypeDef Led);
+
+/// @}
+
+/// @ingroup button
+/// @{
+
 /// initialize button
 void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode);
 /// get button state
 uint32_t STM_EVAL_PBGetState(Button_TypeDef Button);
+
+/// }
 
 /**
   * @}
@@ -183,4 +246,5 @@ uint32_t STM_EVAL_PBGetState(Button_TypeDef Button);
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
+/// @}
 /// @}
