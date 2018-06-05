@@ -10,43 +10,80 @@
 #include "stm32f0_discovery.h"
 #include "stm32f0xx_hal.h"
 
-/// configure system clock
-void SystemClock_Config(void){
+void init_SysTick(void) {
+}
 
-	// setup oscillator source
+/// @brief System Clock Configuration
+void SystemClock_Config(void) {
+
+	// Initializes oscillator sources
 
 	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+
 	RCC_OscInitStruct.OscillatorType	= RCC_OSCILLATORTYPE_HSI;
-	RCC_OscInitStruct.HSIState			= RCC_HSI_ON;				// 8 MHz
-	RCC_OscInitStruct.HSEState			= RCC_HSE_OFF;
-	RCC_OscInitStruct.LSIState			= RCC_LSI_OFF;				// 40000
-	RCC_OscInitStruct.LSEState			= RCC_LSE_OFF;				// 32768
-	RCC_OscInitStruct.PLL.PLLState		= RCC_PLL_OFF;				// no mult
-	RCC_OscInitStruct.PLL.PLLSource		= RCC_PLLSOURCE_HSI;
-	RCC_OscInitStruct.PLL.PREDIV		= RCC_PREDIV_DIV1;
-	RCC_OscInitStruct.PLL.PLLMUL		= RCC_PLL_MUL2;
-	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) while(1);
+	RCC_OscInitStruct.HSIState				= RCC_HSI_ON;			// 8 MHz
+	RCC_OscInitStruct.HSICalibrationValue	= 0x10;
+	RCC_OscInitStruct.HSEState				= RCC_HSE_OFF;			// no xtal
+	RCC_OscInitStruct.PLL.PLLState			= RCC_PLL_NONE;			// no mult
+//	RCC_OscInitStruct.PLL.PLLSource		= RCC_PLLSOURCE_HSI;
+//	RCC_OscInitStruct.PLL.PREDIV		= RCC_PREDIV_DIV1;
+//	RCC_OscInitStruct.PLL.PLLMUL		= RCC_PLL_MUL2;
+//	RCC_OscInitStruct.LSIState			= RCC_LSI_OFF;				// 40000
+//	RCC_OscInitStruct.LSEState			= RCC_LSE_OFF;				// 32768
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+		_Error_Handler(__FILE__, __LINE__);
 
-	// setup bus clocks
+	// Initializes the CPU clock
 
-	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
-	RCC_ClkInitStruct.ClockType			= \
-		RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_PCLK1;
-	RCC_ClkInitStruct.SYSCLKSource		= RCC_SYSCLKSOURCE_HSI;
-	RCC_ClkInitStruct.AHBCLKDivider		= RCC_SYSCLK_DIV1;		// 8max slow
-	RCC_ClkInitStruct.APB1CLKDivider	= RCC_HCLK_DIV1;		// 8max poke
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1)!=HAL_OK) while(1);
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
 
-	// peripheral clocks
+    RCC_ClkInitStruct.ClockType			= \
+    	RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_PCLK1;
+    RCC_ClkInitStruct.SYSCLKSource		= RCC_SYSCLKSOURCE_HSI;
+    RCC_ClkInitStruct.AHBCLKDivider		= RCC_SYSCLK_DIV16;	// HSI:16max slow
+    RCC_ClkInitStruct.APB1CLKDivider	= RCC_HCLK_DIV16;			// poke
 
-	RCC_PeriphCLKInitTypeDef PeriphCLKInitStruct = { 0 };
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+    	_Error_Handler(__FILE__, __LINE__);
+
+	// Initializes AHB and APB peripheral busses clocks
+
+//	RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
+
+    // SysTick
+    HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);			// interrupt time
+    HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);	// clock
+    HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);				// IRQ
+
+    init_SysTick();
 
 }
 
-/// initialize only HAL and clock
+/// initialize only HAL, core clock and SysTick
 void init_core(void) {
+	/* Reset of all peripherals, Initializes the Flash interface and Systick */
 	HAL_Init();
+	/* Configure the system clock */
 	SystemClock_Config();
+}
+
+/// init GPIO
+void init_GPIO(void) {
+
+}
+
+// init UART
+void init_UARTs(void) {
+
+	RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
+
+	// USART1 clock
+
+    PeriphClkInit.PeriphClockSelection	= RCC_PERIPHCLK_USART1;		// USART1
+	PeriphClkInit.Usart1ClockSelection	= RCC_USART1CLKSOURCE_PCLK1;
+	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+		_Error_Handler(__FILE__, __LINE__);
+
 }
 
 /// init buttons
@@ -99,11 +136,30 @@ void init_oscill() {
 
 }
 
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @param  file: The file name as string.
+  * @param  line: The line in file as a number.
+  * @retval None
+  */
+void _Error_Handler(char *file, int line)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  while(1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
 /// initizalize system in a whole
 void init(void) {
 	init_core();
-	init_buttons();
-	init_oscill();
+	init_GPIO();
+	init_UARTs();
+
+//	init_buttons();
+//	init_oscill();
 	init_LEDs();
 }
 

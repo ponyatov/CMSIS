@@ -14,7 +14,8 @@ GDB		= $(TARGET)-gdb
 OBJDUMP	= $(TARGET)-objdump
 AR		= $(TARGET)-ar
 
-CFLAGS	+= -Os -g -ffunction-sections -fdata-sections
+DEBUG	+= -O0 -g
+CFLAGS	+= $(DEBUG) -ffunction-sections -fdata-sections
 CFLAGS	+= -I$(CURDIR)/include/STM32 -I$(CURDIR)/src
 LDFLAGS	+= -Wl,--gc-sections -Wl,-T,lib/$(MCU_LDSCRIPT).ld -L$(CURDIR)/lib
 
@@ -27,6 +28,7 @@ OBJ	+= tmp/stm32f0xx_hal_cortex.o
 OBJ	+= tmp/stm32f0xx_hal_flash.o
 OBJ	+= tmp/stm32f0xx_hal_flash_ex.o
 OBJ += tmp/stm32f0xx_hal_rcc.o
+OBJ += tmp/stm32f0xx_hal_rcc_ex.o
 OBJ += tmp/stm32f0xx_hal_gpio.o
 
 S	+= src/STM32/startup_stm32f051x8.s	src/STM32/startup_stm32l073xx.s
@@ -55,6 +57,7 @@ C	+= src/STM32/stm32f0xx_hal_flash_ex.c
 H	+= include/STM32/stm32f0xx_hal_rcc.h
 H	+= include/STM32/stm32f0xx_hal_rcc_ex.h
 C	+= src/STM32/stm32f0xx_hal_rcc.c
+C	+= src/STM32/stm32f0xx_hal_rcc_ex.c
 
 H	+= include/STM32/stm32f0xx_hal_gpio.h
 H	+= include/STM32/stm32f0xx_hal_gpio_ex.h
