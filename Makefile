@@ -66,7 +66,7 @@ C	+= src/STM32/stm32f0xx_hal_gpio.c
 
 H	+= include/STM32/stm32f0xx_hal_dma.h
 H	+= include/STM32/stm32f0xx_hal_dma_ex.h
-#C	+= src/STM32/stm32f0xx_hal_gpio.c
+C	+= src/STM32/stm32f0xx_hal_dma.c
 
 H	+= include/STM32/stm32f0xx_hal_i2c.h
 H	+= include/STM32/stm32f0xx_hal_i2c_ex.h
@@ -76,7 +76,8 @@ H	+= include/STM32/stm32f0xx_hal_pwr_ex.h
 
 H	+= include/STM32/stm32f0xx_hal_uart.h
 H	+= include/STM32/stm32f0xx_hal_uart_ex.h
-#C	+= src/STM32/stm32f0xx_hal_gpio.c
+C	+= src/STM32/stm32f0xx_hal_uart.c
+C	+= src/STM32/stm32f0xx_hal_uart_ex.c
 
 LDS	+= lib/STM32L073VZTx_FLASH.ld lib/STM32F051R8_FLASH.ld
 

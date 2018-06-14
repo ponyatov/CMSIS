@@ -134,18 +134,11 @@ void init_LEDs(void) {
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 
-	/*Configure GPIO pin Output Level */
+	/* Configure GPIO pin Output Level */
 	HAL_GPIO_WritePin(GPIOC, LD3_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOC, LD4_Pin, GPIO_PIN_SET);
 
-	/*Configure LED3_GPIO LED4_GPIO */
-	GPIO_InitStruct.Pin		= LD4_Pin|LD3_Pin;
-	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull	= GPIO_NOPULL;
-	GPIO_InitStruct.Speed	= GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LED_GPIO_Port, &GPIO_InitStruct);
-
-	/* LED3_GPIO LED4_GPIO */
+	/* Configure LED3_GPIO LED4_GPIO */
 	GPIO_InitStruct.Pin		= LD4_Pin|LD3_Pin;
 	GPIO_InitStruct.Mode	= GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull	= GPIO_NOPULL;
